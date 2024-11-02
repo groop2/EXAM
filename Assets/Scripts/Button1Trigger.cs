@@ -12,7 +12,7 @@ public class Button1Trigger : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && !hasInteracted)
         {
-            dialogueText.text = "Press E to choose: Save the child.";
+            dialogueText.text = "Press R to choose: Save the child.";
             Debug.Log("Player entered Button 1 trigger."); // Дебаг сообщение
         }
     }
@@ -28,7 +28,7 @@ public class Button1Trigger : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !hasInteracted)
+        if (Input.GetKeyDown(KeyCode.R) && !hasInteracted)
         {
             StartCoroutine(Choose());
         }
