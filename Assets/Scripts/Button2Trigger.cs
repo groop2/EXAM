@@ -1,44 +1,49 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class Button2Trigger : MonoBehaviour
 {
-    public GameObject dialogCanvas;
-    public Text questionText;
-    public Text responseText;
-    public GameObject door;
-    public DoorController doorController;
+    public Text dialogueText; // Ссылка на текстовое поле для диалога
+    public Animator doorAnimator; // Ссылка на Animator двери
+    private bool hasInteracted = false; // Флаг для отслеживания взаимодействия
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collision)
     {
-        if (other.gameObject.name == "Player")
+        if (collision.gameObject.CompareTag("Player") && !hasInteracted)
         {
-            dialogCanvas.SetActive(true);
-            questionText.text = "Кого вы спасете: ребенка или маму?";
-            responseText.text = "Вы выбрали маму.";
+            dialogueText.text = "Press E to choose: Save the mother.";
+            Debug.Log("Player entered Button 2 trigger."); // Дебаг сообщение
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider collision)
     {
-        if (other.gameObject.name == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
-            dialogCanvas.SetActive(false);
-            questionText.text = "";
-            responseText.text = "";
+            dialogueText.text = ""; // Скрыть текст при выходе из триггера
+            Debug.Log("Player exited Button 2 trigger."); // Дебаг сообщение
         }
     }
 
-    public void Choose()
+    private void Update()
     {
-        responseText.text += "\nСделал ли ты правильный выбор?";
-        Invoke("OpenDoor", 3f);
+        if (Input.GetKeyDown(KeyCode.E) && !hasInteracted)
+        {
+            StartCoroutine(Choose());
+        }
     }
 
-    private void OpenDoor()
+    private IEnumerator Choose()
     {
-        dialogCanvas.SetActive(false);
-        responseText.text = "";
-        doorController.IsOpen = true;
+        hasInteracted = true; // Устанавливаем флаг, что взаимодействие произошло
+        dialogueText.text = "You chose to save the mother.";
+        Debug.Log("Player chose Button 2."); // Дебаг сообщение
+        yield return new WaitForSeconds(2); // Задержка, чтобы текст был виден
+        dialogueText.text = ""; // Скрыть текст
+
+        // Вызов анимации открытия двери
+        doorAnimator.SetBool("IsOpen", true);
+        Debug.Log("Door animator parameter set to open."); // Дебаг сообщение
     }
 }
