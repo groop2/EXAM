@@ -1,18 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class NewBehaviourScript : MonoBehaviour
+public class ControlArea : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private bool Entered = false;
+    public GameObject dialogCanvas;
+    public Text dialogText;
+    public string dialogMessage = "Это текст диалога.";
+
+    private void OnTriggerEnter(Collider collision)
     {
-        
+        if (collision.gameObject.name == "Player")
+        {
+            Entered = true;
+            dialogText.text = dialogMessage;
+            dialogCanvas.SetActive(true);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit(Collider collision)
     {
-        
+        if (collision.gameObject.name == "Player")
+        {
+            Entered = false;
+            dialogCanvas.SetActive(false);
+            dialogText.text = "";
+        }
     }
 }
