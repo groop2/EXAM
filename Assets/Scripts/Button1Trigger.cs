@@ -8,7 +8,7 @@ public class Button1Trigger : MonoBehaviour
     public Text responseText;
     public GameObject door;
     public DoorController doorController;
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "Player")

@@ -1,18 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorScript : MonoBehaviour
+public class DoorController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Animator animator;
+    public bool IsOpen;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        animator.SetBool("IsOpen", IsOpen);
     }
 }
